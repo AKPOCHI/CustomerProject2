@@ -1,3 +1,5 @@
+using Data;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 namespace Api
@@ -7,6 +9,11 @@ namespace Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+
+            //professional method of setting up AppDbContext
+            var connString = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connString));
 
             // Add services to the container.
 

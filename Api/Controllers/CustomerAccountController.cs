@@ -9,11 +9,13 @@ namespace Api.Controllers
     [ApiController]
     public class CustomerAccountController : ControllerBase
     {
-        public CustomerAccountController()
+
+        private readonly AppDbContext _context;
+
+        public CustomerAccountController(AppDbContext context)
         {
-
+            _context = context;
         }
-
 
         [HttpPost("createAccount")]
         public string CreateAccount(Guid customerId, AccountTypeEnum accountTypeEnum)
@@ -33,11 +35,10 @@ namespace Api.Controllers
             account.AccountNumber = GenerateAccountNumber();
             account.CustomerId = customerId;
 
-            using (var context = new AppDbContext())
-            {
-                context.CustomerAccounts.Add(account);
-                context.SaveChanges();
-            }
+           
+                _context.CustomerAccounts.Add(account);
+                _context.SaveChanges();
+            
             return $"here are the customer details\n" +
                 $"account id: {customerId}\n" +
                 $"accountNumber:{account.AccountNumber}\n" +
