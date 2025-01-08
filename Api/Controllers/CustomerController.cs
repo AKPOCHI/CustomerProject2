@@ -9,11 +9,11 @@ namespace Api.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-      
+      private readonly AppDbContext _context;
 
-        public CustomerController()
+        public CustomerController(AppDbContext context)
         {
-            
+            _context = context;
         }
 
         [HttpPost("create-user")]
@@ -27,12 +27,9 @@ namespace Api.Controllers
                 Email = createUserDto.Email,
                 PassWord = createUserDto.Password
             };
-            using (var Context = new AppDbContext())
-            {
-                Context.Customers.Add(customer);
-                Context.SaveChanges();
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
 
-            }
             return "customer added successfully";
         }
 

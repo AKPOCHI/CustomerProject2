@@ -14,7 +14,7 @@ namespace Data.Models
         public Guid CustomerId { get; set; }
         public AccountTypeEnum AccountType { get; set; }
         public string AccountNumber { get; set; }   
-        public decimal AccountBallance { get; set; }
+
         public decimal AccountBalance { get; set; }
     }
 }
